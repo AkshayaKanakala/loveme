@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a0b2e 0%, #3d1f47 100%);
+        }
+
+        .container {
+            background: linear-gradient(180deg, #4a4458 0%, #5a4d6b 100%);
+            border-radius: 40px;
+            padding: 60px 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .cat {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .cat-body {
+            width: 120px;
+            height: 140px;
+            background: white;
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .cat-ear-left, .cat-ear-right {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: -5px;
+        }
+
+        .cat-ear-left {
+            left: 15px;
+            transform: rotate(-20deg);
+        }
+
+        .cat-ear-right {
+            right: 15px;
+            transform: rotate(20deg);
+        }
+
+        .cat-ear-inner-left, .cat-ear-inner-right {
+            width: 20px;
+            height: 20px;
+            background: #ffb3ba;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: 5px;
+        }
+
+        .cat-ear-inner-left {
+            left: 8px;
+        }
+
+        .cat-ear-inner-right {
+            right: 8px;
+        }
+
+        .cat-face {
+            position: relative;
+            top: 40px;
+        }
+
+        .cat-eyes {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+        }
+
+        .cat-eye {
+            width: 8px;
+            height: 3px;
+            background: #333;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .cat-eye.sad {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+        }
+        
+        .cat-eye.crying {
+            height: 10px;
+        }
+
+        .cat-nose {
+            width: 8px;
+            height: 8px;
+            background: #ffb3ba;
+            border-radius: 0 0 50% 50%;
+            margin: 0 auto 5px;
+        }
+
+        .cat-mouth {
+            width: 20px;
+            height: 10px;
+            border: 2px solid #333;
+            border-top: none;
+            border-radius: 0 0 50% 50%;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .cat-mouth.sad {
+            border-bottom: none;
+            border-top: 2px solid #333;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .cat-blush-left, .cat-blush-right {
+            width: 25px;
+            height: 15px;
+            background: #ffccd5;
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+        }
+
+        .cat-blush-left {
+            left: 10px;
+        }
+
+        .cat-blush-right {
+            right: 10px;
+        }
+
+        .cat-hands {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+        }
+
+        .heart-hold {
+            font-size: 30px;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 80px;
+        }
+
+        button {
+            padding: 18px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .yes-btn {
+            background: #ff3b9a;
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background: #e6358a;
+            transform: scale(1.05);
+        }
+
+        .no-btn {
+            background: #3d3d3d;
+            color: white;
+            transition: none;
+        }
+
+        .no-btn:hover {
+            background: #2d2d2d;
+        }
+
+        .love-message {
+            display: none;
+        }
+
+        .love-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .love-message h1 {
+            font-size: 36px;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .love-message p {
+            font-size: 24px;
+            color: #ffb3ba;
+            margin-top: 20px;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #ffb3ba;
+            margin-bottom: 30px;
+            min-height: 50px;
+            line-height: 1.5;
+        }
+
+        .big-heart {
+            font-size: 100px;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question-section">
+            <div class="cat">
+                <div class="cat-body">
+                    <div class="cat-ear-left">
+                        <div class="cat-ear-inner-left"></div>
+                    </div>
+                    <div class="cat-ear-right">
+                        <div class="cat-ear-inner-right"></div>
+                    </div>
+                    <div class="cat-blush-left"></div>
+                    <div class="cat-blush-right"></div>
+                    <div class="cat-face">
+                        <div class="cat-eyes">
+                            <div class="cat-eye" id="catEye1"></div>
+                            <div class="cat-eye" id="catEye2"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth" id="catMouth"></div>
+                    </div>
+                    <div class="cat-hands">
+                        <div class="heart-hold" id="heartHold">💖</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h1>Do you love me? ❤️</h1>
+            <p class="message" id="message"></p>
+            
+            <div class="buttons">
+                <button class="yes-btn" onclick="handleYes()">Yes</button>
+                <button class="no-btn" id="noBtn" onclick="handleNo()">No</button>
+            </div>
+        </div>
+
+        <div class="love-message" id="loveMessage">
+            <div class="cat">
+                <div class="cat-body">
+                    <div class="cat-ear-left">
+                        <div class="cat-ear-inner-left"></div>
+                    </div>
+                    <div class="cat-ear-right">
+                        <div class="cat-ear-inner-right"></div>
+                    </div>
+                    <div class="cat-blush-left"></div>
+                    <div class="cat-blush-right"></div>
+                    <div class="cat-face">
+                        <div class="cat-eyes">
+                            <div class="cat-eye"></div>
+                            <div class="cat-eye"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth"></div>
+                    </div>
+                    <div class="cat-hands">
+                        <div class="heart-hold">💖</div>
+                    </div>
+                </div>
+            </div>
+            <div class="big-heart">💕</div>
+            <h1>I knew you should choose me only!</h1>
+            <p>Love you too! 😊</p>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        const questionSection = document.getElementById('question-section');
+        const loveMessage = document.getElementById('loveMessage');
+        const message = document.getElementById('message');
+        const catEye1 = document.getElementById('catEye1');
+        const catEye2 = document.getElementById('catEye2');
+        const catMouth = document.getElementById('catMouth');
+        const heartHold = document.getElementById('heartHold');
+
+        function handleYes() {
+            questionSection.style.display = 'none';
+            loveMessage.classList.add('show');
+        }
+
+        function handleNo() {
+            noCount++;
+            
+            if (noCount === 1) {
+                message.textContent = "Think again, I would match for you! 💭";
+                catEye1.classList.add('sad');
+                catEye2.classList.add('sad');
+                heartHold.textContent = "💗";
+            } else if (noCount === 2) {
+                message.textContent = "Please think once more for our bright future! 🌟";
+                catMouth.classList.add('sad');
+                heartHold.textContent = "💔";
+            } else if (noCount === 3) {
+                message.textContent = "So you don't change your opinion on me... 💔";
+                catEye1.classList.add('crying');
+                catEye2.classList.add('crying');
+                heartHold.textContent = "😢";
+            }
+        }
+
+        noBtn.addEventListener('mouseenter', function() {
+            if (noCount >= 3) {
+                const randomX = Math.random() * 200 - 100;
+                const randomY = Math.random() * 200 - 100;
+                
+                noBtn.style.transform = 'translate(' + randomX + 'px, ' + randomY + 'px)';
+                noBtn.style.transition = 'transform 0.3s ease-out';
+            }
+        });
+    </script>
+</body>
+</html>
